@@ -1,41 +1,45 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>日付ウィジェット</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .widget {
-            font-size: 2rem;
-            color: #333;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>カレンダーと組み合わせた時計</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f0f0f0;
+    }
+    #calendar, #clock {
+      font-size: 3rem; /* 文字サイズを大きく設定 */
+      margin: 10px 0;
+      color: #333;
+    }
+  </style>
 </head>
 <body>
-    <div class="widget">
-        今日の日付は: <span id="date"></span>
-    </div>
+  <div id="calendar"></div>
+  <div id="clock"></div>
 
-    <script>
-        const today = new Date();
-        const year = today.getFullYear();
-        const month = today.getMonth() + 1;
-        const day = today.getDate();
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const clockElement = document.getElementById("clock");
+      const calendarElement = document.getElementById("calendar");
 
-        // 曜日の配列を作成
-        const weekDays = ["日曜日", "月曜日", "火曜日", "水曜日", "木曜日", "金曜日", "土曜日"];
-        const dayOfWeek = weekDays[today.getDay()]; // 曜日を取得
+      function updateDateTime() {
+        const now = new Date();
+        clockElement.textContent = `${now.toLocaleTimeString()}`;
+        calendarElement.textContent = `${now.toLocaleDateString()}`;
+      }
 
-        // 日付と曜日を表示
-        document.getElementById('date').textContent = `${year}年${month}月${day}日 (${dayOfWeek})`;
-    </script>
+      updateDateTime();  // ページ読み込み時に即座に更新
+      setInterval(updateDateTime, 1000);  // 1秒ごとに更新
+    });
+  </script>
 </body>
 </html>
