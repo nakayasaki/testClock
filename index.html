@@ -15,26 +15,44 @@
       margin: 0;
       background-color: #f0f0f0;
     }
-    #calendar, #clock {
+    #calendar {
+      font-size: 1rem; /* 文字サイズを大きく設定 */
+      margin: 0px 0; /* 上下の余白を狭く設定 */
+      color: #333;
+    }
+    #clock {
       font-size: 3rem; /* 文字サイズを大きく設定 */
-      margin: 10px 0;
+      margin: 0px 0; /* 上下の余白を狭く設定 */
       color: #333;
     }
   </style>
 </head>
 <body>
-  <div id="calendar"></div>
   <div id="clock"></div>
+  <div id="calendar"></div>
 
   <script>
     document.addEventListener("DOMContentLoaded", function() {
       const clockElement = document.getElementById("clock");
       const calendarElement = document.getElementById("calendar");
 
+      // 曜日を日本語形式に変換するための配列
+      const weekDays = ["日", "月", "火", "水", "木", "金", "土"];
+
+      function formatDate(date) {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        const dayOfWeek = weekDays[date.getDay()]; // 曜日を取得
+        return `${year}/${month}/${day}(${dayOfWeek})`;
+      }
+
       function updateDateTime() {
         const now = new Date();
-        clockElement.textContent = `${now.toLocaleTimeString()}`;
-        calendarElement.textContent = `${now.toLocaleDateString()}`;
+        const formattedDate = formatDate(now);
+
+        clockElement.textContent = now.toLocaleTimeString();
+        calendarElement.textContent = formattedDate;
       }
 
       updateDateTime();  // ページ読み込み時に即座に更新
